@@ -17,14 +17,7 @@ namespace UOW.DataAccessLayer.EntityFramework.UnitOfWork.Concrete
         }
         public int SaveChanges()
         {
-            try
-            {
-                return _dbContext.SaveChanges();
-            }
-            catch
-            {
-                throw;
-            }
+            return _dbContext.SaveChanges();
         }
 
         public void Dispose()
