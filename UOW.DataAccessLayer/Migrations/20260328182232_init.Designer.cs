@@ -12,17 +12,18 @@ using UOW.DataAccessLayer.EntityFramework;
 namespace UOW.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20231126201329_Initial")]
-    partial class Initial
+    [Migration("20260328182232_init")]
+    partial class init
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.25")
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("UOW.EntityLayer.Entities.Category", b =>
                 {
@@ -30,7 +31,7 @@ namespace UOW.DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("CreatedBy")
                         .HasColumnType("bigint");
@@ -51,7 +52,6 @@ namespace UOW.DataAccessLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("UpdatedBy")
@@ -71,12 +71,12 @@ namespace UOW.DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<long>("CategoryId1")
+                    b.Property<long?>("CategoryId1")
                         .HasColumnType("bigint");
 
                     b.Property<long>("CreatedBy")
@@ -98,7 +98,6 @@ namespace UOW.DataAccessLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
@@ -121,9 +120,7 @@ namespace UOW.DataAccessLayer.Migrations
                 {
                     b.HasOne("UOW.EntityLayer.Entities.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId1");
 
                     b.Navigation("Category");
                 });

@@ -1,15 +1,24 @@
-﻿using AutoMapper;
+﻿using Mapster;
 using UOW.DtoLayer.CategoryDto;
 using UOW.EntityLayer.Entities;
 
 namespace UOW.WebAPI.Mapping
 {
-    public class CategoryMapping : Profile
+    public class CategoryMapping : IRegister
     {
-        public CategoryMapping()
+        public void Register(TypeAdapterConfig config)
         {
-            CreateMap<Category, GetCategoryDto>().ReverseMap();
-            CreateMap<Category, CreateCategoryDto>().ReverseMap();
+            config.NewConfig<Category, GetCategoryDto>()
+                .Map(dest => dest, src => src);
+            
+            config.NewConfig<GetCategoryDto, Category>()
+                .Map(dest => dest, src => src);
+
+            config.NewConfig<Category, CreateCategoryDto>()
+                .Map(dest => dest, src => src);
+            
+            config.NewConfig<CreateCategoryDto, Category>()
+                .Map(dest => dest, src => src);
         }
     }
 }
